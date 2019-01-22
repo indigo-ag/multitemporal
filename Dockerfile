@@ -1,5 +1,8 @@
 FROM ubuntu:16.04
 
+WORKDIR /multitemporal
+COPY . /multitemporal
+
 RUN echo "deb http://ppa.launchpad.net/ubuntugis/ppa/ubuntu xenial main" >> \
        /etc/apt/sources.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 314DF160 \
@@ -14,15 +17,12 @@ RUN echo "deb http://ppa.launchpad.net/ubuntugis/ppa/ubuntu xenial main" >> \
     python-gdal \
     libgdal-dev \
     gdal-bin \
+    emacs-nox \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get -y autoremove \
     && apt-get -y autoclean
 
-COPY . /multitemporal
-
-RUN cd /multitemporal \
-    && pip install -r requirements.txt \
+RUN pip install -r requirements.txt \
     && pip install -e .
 
-WORKDIR /multitemporal
 VOLUME data
