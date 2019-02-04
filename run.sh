@@ -1,1 +1,1 @@
-docker run -it --rm -v /mnt/storage:/data -v /home/ubuntu/multitemporal:/multitemporal multitemporal
+docker run -it --rm -v ${DATADIR}:/data -v ${WORKDIR}/multitemporal:/multitemporal multitemporal
