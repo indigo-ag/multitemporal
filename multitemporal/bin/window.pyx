@@ -39,10 +39,9 @@ def window(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data not Non
                         result[0,j,k] = result[0,j,k] + data[i,j,k]
                         count = count + 1.0
 
-            for i1 in range(nfr):
-                if count > 0.0:
-                    result[0,j,k] = result[0,j,k]/count
-                else:
-                    result[0,j,k] = missingval
+            if count > 0.0:
+                result[0,j,k] = result[0,j,k]/count
+            else:
+                result[0,j,k] = missingval
 
     return result
