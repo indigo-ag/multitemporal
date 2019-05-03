@@ -22,10 +22,9 @@ def window(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data not Non
     cdef int nout = get_nout(nfr, params)
 
     cdef int day1 = <int>params[0]
-    cdef float day2 = <int>params[1]
+    cdef int day2 = <int>params[1]
 
     cdef np.ndarray[np.float32_t, ndim=3] result = np.zeros((nout,nyr,npx), dtype='float32')
-    #cdef np.ndarray[np.float32_t, ndim=1] count = np.zeros(nout, dtype='float32')
 
     cdef float count
     cdef unsigned int i,j,k

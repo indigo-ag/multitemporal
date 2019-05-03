@@ -1,1 +1,1 @@
-docker run -it --rm -v ${DATADIR}:/data multitemporal
+docker run -it --rm -v ${DATADIR}:/data -v ${WORKDIR}:/multitemporal multitemporal

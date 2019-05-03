@@ -1,7 +1,7 @@
 import numpy as np
 cimport numpy as np
 cimport cython
-    
+
 @cython.boundscheck(False)
 @cython.wraparound(False)
 @cython.cdivision(True)
@@ -34,7 +34,7 @@ def interpolate(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data no
         else:
             interpval[0,0] = data[0,0,k]
             interppos[0,0] = 0.0
-        
+
         if data[nfr-1,nyr-1,k] == missingval:
             interpval[1,ntime-1] = missingval
         else:
