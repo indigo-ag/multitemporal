@@ -37,4 +37,3 @@ def window(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data not Non
                     idx = idx + 1
 
     return result
-
