@@ -5,6 +5,7 @@ FROM geographica/gdal2:latest
 RUN apt-get -y update && apt-get install -y --allow-unauthenticated python3-pip
 
 COPY . /multitemporal
+WORKDIR /multitemporal
 
 # no such file:  # && pip install -r requirements.txt \
 # broke due to https://github.com/pypa/pip/issues/5599:  # && pip install --upgrade pip \
