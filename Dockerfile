@@ -13,5 +13,4 @@ RUN cd /multitemporal && pip3 install Cython numpy sharedmem pytest pytest-cov f
     pip3 install -e . && python3 setup.py build_ext --inplace
 RUN apt-get -y autoremove && apt-get -y autoclean
 
-WORKDIR /multitemporal
 VOLUME data

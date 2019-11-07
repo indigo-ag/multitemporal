@@ -1,1 +1,1 @@
-docker build -t multitemporal . --no-cache
+docker build -t multitemporal --no-cache .

@@ -1,7 +1,7 @@
 import numpy as np
 cimport numpy as np
 cimport cython
-    
+
 @cython.boundscheck(False)
 @cython.wraparound(False)
 @cython.cdivision(True)
@@ -24,7 +24,7 @@ def recomposite(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data no
 
     cdef np.ndarray[np.float32_t, ndim=3] result = np.zeros((nfr1,nyr,npx), dtype='float32')
     cdef np.ndarray[np.float32_t, ndim=1] count = np.zeros(nfr1, dtype='float32')
-    
+
     cdef unsigned int i,j,k
     cdef int i1
 
@@ -44,5 +44,5 @@ def recomposite(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data no
                     result[i1,j,k] = result[i1,j,k]/count[i1]
                 else:
                     result[i1,j,k] = missingval
-    
+
     return result
