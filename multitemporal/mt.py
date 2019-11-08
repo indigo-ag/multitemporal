@@ -113,7 +113,7 @@ def worker(shared, job):
             data[ib, ifr, iyr, wgood] = \
                 source['offset'] + source['scale']*values[wgood]
             del fp
-    
+
     sourcenames = [source['name'] for source in sources]
     results = {}
 
@@ -131,7 +131,7 @@ def worker(shared, job):
             d = np.array([results[si] for si in step['inputs']])
 
         if d.shape[0] == 1:
-            d = d.reshape(d.shape[1], nyr, npx)
+            d = d.reshape(d.shape[1], d.shape[2], npx)
 
         results[step['name']] = step['function'](d, missing_out, step['params'])
         if step.get('output', False):
@@ -306,7 +306,8 @@ def run(projdir, outdir, projname, sources, steps,
         for thisinput in step['inputs']:
             # if this input is in the sources then we know it's a starting point for the pipeline:
             if thisinput in [source['name'] for source in sources]:
-                thisnin = nfr # nfr == len(doys)
+                thisnin = nfr
+                thisnyrin = nyr
                 step['initial'] = True
             else:
                 # handle intermediary steps in the pipeline; only one parent is allowed
@@ -316,17 +317,23 @@ def run(projdir, outdir, projname, sources, steps,
                         'specified input: {}\n\tpossible inputs: {}'
                         .format(thisinput, [s['name'] for s in steps]))
                 thisnin = parentsteps[0]['nout']
+                thisnyrin = parentsteps[0]['nyrout']
+
             if 'nin' in step:
                 assert step['nin'] == thisnin, "Number of inputs do not match"
             else:
                 step['nin'] = thisnin
 
+            if 'nyrin' in step:
+                assert step['nyrin'] == thisnyrin, "Number of years do not match"
+            else:
+                step['nyrin'] = thisnyrin
+
+
         # set the number of outputs for each step
         step['nout'] = int(mod.get_nout(step['nin'], step['params']))
-        try:
-            step['nyrout'] = int(mod.get_nyrout(nyr, step['params']))
-        except:
-            step['nyrout'] = nyr
+        step['nyrout'] = int(mod.get_nyrout(step['nyrin'], step['params']))
+
         if step.get('output', False):
             print("output", mod, (step['nout'], step['nyrout'], height*width))
             OUTPUT[step['name']] = sharedmem.empty(
