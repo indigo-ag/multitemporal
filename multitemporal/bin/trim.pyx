@@ -11,7 +11,7 @@ def get_nout(int nin, np.ndarray[np.float32_t, ndim=1, negative_indices=False] p
     return params[1] - params[2] + 1
 
 
-def window(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data not None,
+def trim(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data not None,
            float missingval,
            np.ndarray[np.float32_t, ndim=1, negative_indices=False] params not None):
 

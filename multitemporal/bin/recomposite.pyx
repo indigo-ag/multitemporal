@@ -11,6 +11,10 @@ def get_nout(int nin, np.ndarray[np.float32_t, ndim=1, negative_indices=False] p
     return params[0]
 
 
+def get_nyrout(int nyr, np.ndarray[np.float32_t, ndim=1, negative_indices=False] params not None):
+    return nyr
+
+
 def recomposite(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data not None,
                 float missingval,
                 np.ndarray[np.float32_t, ndim=1, negative_indices=False] params not None):
@@ -22,7 +26,9 @@ def recomposite(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data no
     cdef int nfr1 = <int>params[0]
     cdef float fac = <float>nfr/<float>nfr1
 
-    cdef np.ndarray[np.float32_t, ndim=3] result = np.zeros((nfr1,nyr,npx), dtype='float32')
+    cdef int nyrout = get_nyrout(nyr, params)
+
+    cdef np.ndarray[np.float32_t, ndim=3] result = np.zeros((nfr1,nyrout,npx), dtype='float32')
     cdef np.ndarray[np.float32_t, ndim=1] count = np.zeros(nfr1, dtype='float32')
 
     cdef unsigned int i,j,k

@@ -9,6 +9,11 @@ cimport cython
 def get_nout(int nin, np.ndarray[np.float32_t, ndim=1, negative_indices=False] params not None):
     return nin
 
+
+def get_nyrout(int nyr, np.ndarray[np.float32_t, ndim=1, negative_indices=False] params not None):
+    return nyr
+
+
 def interpolate(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data not None,
                 float missingval,
                 np.ndarray[np.float32_t, ndim=1, negative_indices=False] params not None):

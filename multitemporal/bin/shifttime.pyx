@@ -10,7 +10,7 @@ def get_nout(int nin, np.ndarray[np.float32_t, ndim=1, negative_indices=False] p
     return nin
 
 def get_nyrout(int nyr, np.ndarray[np.float32_t, ndim=1, negative_indices=False] params not None):
-    return nyr-1
+    return nyr
 
 def shifttime(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data not None,
                 float missingval,
@@ -20,16 +20,16 @@ def shifttime(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data not 
     cdef unsigned int nyr = data.shape[1]
     cdef unsigned int npx = data.shape[2]
 
-    cdef int offset = <int>params[0]
+    cdef int offset = <int>params[0] - 1
 
-    cdef np.ndarray[np.float32_t, ndim=3] result = np.zeros((nfr,nyr-1,npx), dtype='float32')
+    cdef np.ndarray[np.float32_t, ndim=3] result = np.zeros((nfr,nyr,npx), dtype='float32')
 
     cdef int i, j, k
     cdef int t, nt
     cdef int t1, i1, j1
     cdef float count, ave
 
-    nt = nfr*(nyr-1)
+    nt = nfr*(nyr)
 
     for k in range(npx):
         for t in range(nt):
