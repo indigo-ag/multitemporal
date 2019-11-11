@@ -1,0 +1,43 @@
+{
+    "projname" : "mt_test_brazil",
+    "projdir"  : "/data/brazil_crop_mask/data",
+    "outdir"   : "/data/brazil_crop_mask/result",
+    "dperframe": 1,
+    "sources":
+    [
+        {
+            "name"   : "evi2",
+            "regexp" : "^veg_indices_evi2_modis_(\\d{8})_10_9.tif$",
+            "bandnum": 1,
+            "scale"  : 0.0001
+        }
+    ],
+    "steps":
+    [
+        {
+            "module" : "interpolate",
+            "params" : [],
+            "inputs" : "evi2",
+            "output" : false
+        },
+        {
+            "module" : "shifttime",
+            "params" : [244],
+            "inputs" : "interpolate",
+            "output" : false
+        },
+        {
+            "module" : "trimyr",
+            "params" : [1,1],
+            "inputs" : "shifttime",
+            "output" : false
+        },
+        {
+            "module" : "features",
+            "params" : [],
+            "inputs" : "trimyr",
+            "output" : true
+        }
+
+    ]
+}

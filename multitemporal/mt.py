@@ -372,10 +372,15 @@ def run(projdir, outdir, projname, sources, steps,
                 prog += 1
                 print('mt {:0.02f} complete.\r'.format(pct))
             results.append(r)
-    else:
+    elif nproc == 1:
         results = []
         for job in jobs:
             results.append(func(job))
+    elif nproc < 0:
+        # secret way to test
+        results = [func(jobs[-nproc-1])]
+    else:
+        raise Exception("nproc can't be zero")
 
     # write outputs
     if not os.path.exists(outdir):
