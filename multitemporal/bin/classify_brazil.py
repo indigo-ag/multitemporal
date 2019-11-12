@@ -29,7 +29,7 @@ VARNAMES = [
 
 
 def get_nout(nin, params):
-    return len(VARNAMES)
+    return 1
 
 
 def get_nyrout(nyr, params):
@@ -101,7 +101,7 @@ def calc_timeseries_features(
     return result
 
 
-def features(data, missingval, params):
+def classify_brazil(data, missingval, params):
 
     nfr = data.shape[0]
     nyr = data.shape[1]
@@ -112,8 +112,13 @@ def features(data, missingval, params):
 
     output = np.zeros((nout, nyrout, npx), dtype=np.float32)
 
+    model_file = "/multitemporal/multitemporal/bin/rf_2004-2016_varsel.sav"
+    model = pickle.load(open(model_file, 'rb'))
+
     for k in range(npx):
         for j in range(nyr):
-            output[:,j,k] = calc_timeseries_features(data[:,j,k])
+            feature = calc_timeseries_features(data[:,j,k])
+            croptype =  model.predict(feature.reshape(1,15))
+            output[0,j,k] = 1
 
     return output
