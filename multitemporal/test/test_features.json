@@ -1,15 +1,14 @@
 {
-    "projname" : "mt_test_brazil",
-    "projdir"  : "/data/brazil_crop_mask/data",
-    "outdir"   : "/data/brazil_crop_mask/result",
+    "projname" : "mt_test_features",
+    "projdir"  : "/multitemporal/multitemporal/test/data/input",
+    "outdir"   : "/data/mt_test",
     "dperframe": 1,
     "sources":
     [
         {
             "name"   : "evi2",
-            "regexp" : "^veg_indices_evi2_modis_(\\d{8})_12_10.tif$",
-            "bandnum": 1,
-            "scale"  : 0.0001
+            "regexp" : "^(\\d{7})_LC8_ndvi-toa.tif$",
+            "bandnum": 1
         }
     ],
     "steps":

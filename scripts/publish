@@ -1,0 +1,11 @@
+#!/bin/bash
+
+TAG=${1:-latest}
+ECR_URI=304548020545.dkr.ecr.us-east-1.amazonaws.com/telluslabs/rob-sandbox
+
+echo "Publishing with tag '${TAG}'"
+./scripts/setup $TAG
+
+eval $(aws ecr get-login --region us-east-1 --no-include-email)
+docker tag telluslabs/multitemporal:$TAG $ECR_URI:$TAG
+docker push $ECR_URI:$TAG

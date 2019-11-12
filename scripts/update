@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export TAG=${1:-latest}
+
+echo "Building with tag ${TAG}"
+docker-compose build

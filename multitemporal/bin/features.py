@@ -2,7 +2,6 @@ import pickle
 
 import numpy as np
 from scipy.signal import savgol_filter, find_peaks, peak_widths, peak_prominences
-import numba
 import sklearn
 
 

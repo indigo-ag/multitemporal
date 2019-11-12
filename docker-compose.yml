@@ -1,0 +1,15 @@
+version: '3'
+services:
+  docker-multitemporal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: telluslabs/multitemporal:${TAG}
+    volumes:
+      - $PWD:/multitemporal
+      - $HOME/.aws:/root/.aws:ro
+      - $HOME/.gsutil:/root/.gsutil:ro
+      - $HOME/.boto:/root/.boto:ro
+      - $HOME/.telluslabs:/root/.telluslabs:ro
+      - $HOME/.pip:/root/.pip:ro
+      - /mnt/storage:/data
