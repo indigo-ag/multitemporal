@@ -329,10 +329,17 @@ def run(projdir, outdir, projname, sources, steps,
             else:
                 step['nyrin'] = thisnyrin
 
-
         # set the number of outputs for each step
-        step['nout'] = int(mod.get_nout(step['nin'], step['params']))
-        step['nyrout'] = int(mod.get_nyrout(step['nyrin'], step['params']))
+        # TODO: any unexpected behavior here?
+        try:
+            step['nout'] = int(mod.get_nout(step['nin'], step['params']))
+        except:
+            step['nout'] = step['nin']
+
+        try:
+            step['nyrout'] = int(mod.get_nyrout(step['nyrin'], step['params']))
+        except:
+            step['nyrout'] = step['nyrin']
 
         if step.get('output', False):
             print("output", mod, (step['nout'], step['nyrout'], height*width))

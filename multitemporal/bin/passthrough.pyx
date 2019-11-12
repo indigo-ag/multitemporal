@@ -1,7 +1,7 @@
 import numpy as np
 cimport numpy as np
 cimport cython
-    
+
 @cython.boundscheck(False)
 @cython.wraparound(False)
 @cython.cdivision(True)
