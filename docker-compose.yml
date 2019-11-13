@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     image: telluslabs/multitemporal:${TAG}
     volumes:
-      - $PWD:/multitemporal
+      - $PWD/multitemporal:/multitemporal/multitemporal
       - $HOME/.aws:/root/.aws:ro
       - $HOME/.gsutil:/root/.gsutil:ro
       - $HOME/.boto:/root/.boto:ro

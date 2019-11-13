@@ -102,12 +102,19 @@ def calc_timeseries_features(
 
 def classify_brazil(data, missingval, params):
 
-    nfr = data.shape[0]
-    nyr = data.shape[1]
-    npx = data.shape[2]
+    nb = data.shape[0]
+    nfr = data.shape[1]
+    nyr = data.shape[2]
+    npx = data.shape[3]
 
     nout = get_nout(nfr, params)
     nyrout = get_nyrout(nyr, params)
+
+    maskthresh = params[0]
+
+    mask = data[1,0,0,:].squeeze()
+
+    data = data[0,:,:,:].reshape(nfr, nyr, npx)
 
     output = np.zeros((nout, nyrout, npx), dtype=np.float32)
 
@@ -115,9 +122,10 @@ def classify_brazil(data, missingval, params):
     model = pickle.load(open(model_file, 'rb'))
 
     for k in range(npx):
-        for j in range(nyr):
-            feature = calc_timeseries_features(data[:,j,k])
-            croptype =  model.predict(feature.reshape(1,15))
-            output[0,j,k] = 1
+        if mask[k] > maskthresh:
+            for j in range(nyr):
+                feature = calc_timeseries_features(data[:,j,k])
+                croptype =  model.predict(feature.reshape(1,15))
+                output[0,j,k] = model.predict(feature.reshape(1,15))
 
     return output

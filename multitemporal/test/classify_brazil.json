@@ -13,7 +13,7 @@
         },
         {
             "name"   : "mask",
-            "regexp" : "crop_mask_br_corn_op_modis_(\\d{8})_12_10.tif",
+            "regexp" : "br_crop_mask_(\\d{8})_h12_v10.tif",
             "bandnum": 1
         }
     ],
@@ -38,9 +38,15 @@
             "output" : false
         },
         {
+            "module" : "passthrough",
+            "params" : [],
+            "inputs" : "mask",
+            "output" : true
+        },
+        {
             "module" : "classify_brazil",
             "params" : [],
-            "inputs" : "trimyr",
+            "inputs" : ["trimyr","passthrough"],
             "output" : true
         }
     ]

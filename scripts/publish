@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TAG=${1:-latest}
-ECR_URI=304548020545.dkr.ecr.us-east-1.amazonaws.com/telluslabs/rob-sandbox
+ECR_URI=304548020545.dkr.ecr.us-east-1.amazonaws.com/telluslabs/multitemporal
 
 echo "Publishing with tag '${TAG}'"
 ./scripts/setup $TAG

@@ -29,6 +29,8 @@ def trimyr(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data not Non
     cdef int yr1 = <int>params[0] - 1
     cdef int yr2 = <int>params[1] - 1
 
+    print(yr1, yr2, nyr, nout, nyrout)
+
     cdef np.ndarray[np.float32_t, ndim=3] result = np.zeros((nout,nyrout,npx), dtype='float32')
 
     cdef unsigned int i,j,k,idx
@@ -39,6 +41,6 @@ def trimyr(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data not Non
             if j>= yr1 and j <= yr2:
                 for i in range(nfr):
                     result[i,jdx,k] = data[i,j,k]
-            jdx = jdx + 1
+                jdx = jdx + 1
 
     return result

@@ -9,6 +9,11 @@
             "name"   : "evi2",
             "regexp" : "^(\\d{7})_LC8_ndvi-toa.tif$",
             "bandnum": 1
+        },
+        {
+            "name"   : "mask",
+            "regexp" : "^(\\d{7})_foo_mask.tif$",
+            "bandnum": 1
         }
     ],
     "steps":
@@ -17,24 +22,32 @@
             "module" : "interpolate",
             "params" : [],
             "inputs" : "evi2",
-            "output" : false
+            "output" : true
         },
         {
             "module" : "shifttime",
             "params" : [244],
             "inputs" : "interpolate",
-            "output" : false
+            "output" : true
         },
         {
+            "name"   : "evi_1yr",
             "module" : "trimyr",
             "params" : [1,1],
             "inputs" : "shifttime",
-            "output" : false
+            "output" : true
         },
         {
-            "module" : "features",
-            "params" : [],
-            "inputs" : "trimyr",
+            "name"   : "mask_1yr",
+            "module" : "trimyr",
+            "params" : [2,2],
+            "inputs" : "mask",
+            "output" : true
+        },
+        {
+            "module" : "classify_brazil",
+            "params" : [0.2],
+            "inputs" : ["evi_1yr", "mask_1yr"],
             "output" : true
         }
 
