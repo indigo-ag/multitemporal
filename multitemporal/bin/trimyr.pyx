@@ -29,8 +29,6 @@ def trimyr(np.ndarray[np.float32_t, ndim=3, negative_indices=False] data not Non
     cdef int yr1 = <int>params[0] - 1
     cdef int yr2 = <int>params[1] - 1
 
-    print(yr1, yr2, nyr, nout, nyrout)
-
     cdef np.ndarray[np.float32_t, ndim=3] result = np.zeros((nout,nyrout,npx), dtype='float32')
 
     cdef unsigned int i,j,k,idx

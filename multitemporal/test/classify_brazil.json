@@ -32,21 +32,23 @@
             "output" : false
         },
         {
+            "name"   : "evi_season",
             "module" : "trimyr",
             "params" : [1,1],
             "inputs" : "shifttime",
             "output" : false
         },
         {
-            "module" : "passthrough",
-            "params" : [],
+            "name"   : "mask_season",
+            "module" : "trimyr",
+            "params" : [2,2],
             "inputs" : "mask",
-            "output" : true
+            "output" : false
         },
         {
             "module" : "classify_brazil",
-            "params" : [],
-            "inputs" : ["trimyr","passthrough"],
+            "params" : [0.5],
+            "inputs" : ["evi_season", "mask_season"],
             "output" : true
         }
     ]
