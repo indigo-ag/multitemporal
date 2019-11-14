@@ -113,7 +113,6 @@ def classify_brazil(data, missingval, params):
     maskthresh = params[0]
 
     mask = data[1,0,0,:].squeeze()
-
     data = data[0,:,:,:].reshape(nfr, nyr, npx)
 
     output = np.zeros((nout, nyrout, npx), dtype=np.float32)
