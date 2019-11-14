@@ -182,7 +182,12 @@ def run(projdir, outdir, projname, sources, steps,
 
         for i, source_path in enumerate(source_paths):
             source_bn = os.path.basename(source_path)
-            datestr = re.findall(source['regexp'], source_bn)[0]
+
+            groups =  re.findall(source['regexp'], source_bn)
+
+            datestr = groups[0][0]
+            tilestr = groups[0][1]
+
             if not ymd:
                 # default: YYYYDDD
                 date = datetime.datetime.strptime(datestr, '%Y%j')
