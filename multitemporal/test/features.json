@@ -13,7 +13,7 @@
         },
         {
             "name"   : "mask",
-            "regexp" : "br_cropmask_(\\d{8})_12_10.tif",
+            "regexp" : "^br_cropmask_(\\d{8})_12_10.tif$",
             "bandnum": 1
         }
     ],
@@ -46,11 +46,11 @@
             "output" : false
         },
         {
-            "name"   : "classes",
-            "module" : "classify_brazil",
+            "module" : "features",
             "params" : [0.5],
             "inputs" : ["evi_season", "mask_season"],
             "output" : true
         }
+
     ]
 }
