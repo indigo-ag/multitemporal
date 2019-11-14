@@ -13,7 +13,7 @@
         },
         {
             "name"   : "mask",
-            "regexp" : "br_crop_mask_(\\d{8})_12_10.tif",
+            "regexp" : "br_cropmask_(\\d{8})_12_10.tif",
             "bandnum": 1
         }
     ],
