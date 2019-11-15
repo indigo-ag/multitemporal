@@ -5,3 +5,5 @@
 *~
 venv/
 .cache/
+.pip/
+.idea/
