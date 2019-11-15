@@ -520,7 +520,7 @@ def main():
     if not conf['nongips']:
         run_func = run_gipsexport
     try:
-        --n
+        run_func(**conf)
     except Exception as e:
         from pprint import pformat
         import traceback
