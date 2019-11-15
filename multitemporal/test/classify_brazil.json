@@ -1,5 +1,5 @@
 {
-    "projname" : "mt_test_brazil",
+    "projname" : "mt_brazil",
     "projdir"  : "/data/brazil_crop_mask/data",
     "outdir"   : "/data/brazil_crop_mask/result",
     "dperframe": 1,

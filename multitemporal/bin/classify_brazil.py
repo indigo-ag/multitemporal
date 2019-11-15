@@ -30,9 +30,8 @@ def classify_brazil(data, missingval, params):
 
     for k in range(npx):
         for j in range(nyr):
-            if data[0,j,k] > 0:
-                feature = data[:,j,k]
-                croptype =  model.predict(feature.reshape(1,15))
+            feature = data[:,j,k]
+            if feature[0] > 0:
                 output[0,j,k] = model.predict(feature.reshape(1,15))
 
     return output
