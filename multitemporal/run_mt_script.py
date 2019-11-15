@@ -15,7 +15,7 @@ from multitemporal.create_features_json import make_features_json
 def run_tile(tile_id: str, tmp_dir: str):
     make_features_json(tile_id=tile_id, tmp_dir=tmp_dir)
     # call the cli command to do the work
-    command = f'multitemporal --nproc 1 --nongips --ymd --conf {tmp_dir}/features.json'
+    command = f'python3 ./multitemporal/mt.py --nproc 1 --nongips --ymd --conf {tmp_dir}/features.json'
     subprocess.run(command)
 
 
@@ -49,7 +49,8 @@ def download_files(year: int, tile_id: str, tmp_dir: str):
     paths = pd.DataFrame(pd.Series(paths, name='path')).sort_index().reset_index()
     for idx, row in paths.iterrows():
         s3path = S3Path.from_str(row['path'])
-        s3path.download_to(input_path)
+        print(f'downloading {s3path} to {input_path}')
+        #s3path.download_to(input_path)
 
     # also download masks to download location - mt needs two mask years even if only using the last one
     for y in range(year - 1, year + 1):

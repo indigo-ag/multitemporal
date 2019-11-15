@@ -82,6 +82,4 @@ RUN python3 /multitemporal/setup.py build_ext --inplace \
 # remove Indigo Artifactory pip credentials (we are all done with installs)
 RUN rm -rf /root/.pip/pip.conf
 
-
-
-VOLUME data
+VOLUME /data
