@@ -16,13 +16,13 @@ def make_features_json(tile_id: str, tmp_dir: str) -> None:
             [
                 {
                     "name": "evi2",
-                    "regexp": f"^veg_indices_evi2_modis_(\\d{8})_{tile_id}.tif$",
+                    "regexp": "^veg_indices_evi2_modis_(\\d{8})_(\\d{1,2}_\\d{1,2}).tif$",
                     "bandnum": 1,
                     "scale": 0.0001
                 },
                 {
                     "name": "mask",
-                    "regexp": f"^br_cropmask_(\\d{8})_{tile_id}.tif$",
+                    "regexp": "^br_cropmask_(\\d{8})_(\\d{1,2}_\\d{1,2}).tif$",
                     "bandnum": 1
                 }
             ],

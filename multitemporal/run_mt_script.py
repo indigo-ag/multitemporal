@@ -66,7 +66,7 @@ def download_files(year: int, tile_id: str, tmp_dir: str):
 
     print('downloading finished. files downloaded are here: ')
     for f in glob.glob(f'{input_path}/*'):
-        print(f'{f}\n')
+        print(f)
 
 
 def upload_outputs(year: int, tile_id: str, tmp_dir: str):
