@@ -506,13 +506,13 @@ def main():
     # done after above so that defaults from one do not overwrite the other
     # ok for now -- some things just don't have defaults
     defaults = {
-        'nproc' : 1,
-        'nongips' : False,
-        'ymd' : False,
-        'blkrow' : 10,
-        'compthresh' : 0.0,
-        'dperframe' : 1,
-        'missing_out' : -32768.,
+        'nproc': 1,
+        'nongips': False,
+        'ymd': False,
+        'blkrow': 10,
+        'compthresh': 0.0,
+        'dperframe': 1,
+        'missing_out': -32768.,
     }
     for d in defaults:
         conf[d] = conf.get(d, defaults[d])
