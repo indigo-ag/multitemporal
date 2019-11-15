@@ -1,6 +1,5 @@
 import glob
 import json
-import subprocess
 import tempfile
 from pathlib import Path
 import pandas as pd
@@ -10,13 +9,16 @@ import click
 from telluslabs.s3 import S3Path
 
 from multitemporal.create_features_json import make_features_json
+from multitemporal.mt import main as mt
+import sys
 
 
 def run_tile(tile_id: str, tmp_dir: str):
     make_features_json(tile_id=tile_id, tmp_dir=tmp_dir)
     # call the cli command to do the work
-    command = f'python3 ./multitemporal/mt.py --nproc 1 --nongips --ymd --conf {tmp_dir}/features.json'
-    subprocess.run(command)
+    # this is pretty hacky way to get it to work
+    sys.argv = ['', '--nproc', '1', '--ymd', '--nongips', '--conf', f'{tmp_dir}/features.json']
+    mt()
 
 
 def download_files(year: int, tile_id: str, tmp_dir: str):
@@ -50,7 +52,7 @@ def download_files(year: int, tile_id: str, tmp_dir: str):
     for idx, row in paths.iterrows():
         s3path = S3Path.from_str(row['path'])
         print(f'downloading {s3path} to {input_path}')
-        #s3path.download_to(input_path)
+        s3path.download_to(input_path)
 
     # also download masks to download location - mt needs two mask years even if only using the last one
     for y in range(year - 1, year + 1):
