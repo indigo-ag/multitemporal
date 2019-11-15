@@ -10,7 +10,6 @@ import argparse
 from copy import deepcopy
 import datetime
 from functools import partial
-import imp
 import importlib
 import json
 from multiprocessing import Pool
