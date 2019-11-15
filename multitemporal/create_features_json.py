@@ -58,14 +58,14 @@ def make_features_json(tile_id: str, tmp_dir: str) -> None:
                     "module": "features",
                     "params": [0.5],
                     "inputs": ["evi_season", "mask_season"],
-                    "output": false
+                    "output": False
                 },
                 {
                     "name": "classes",
                     "module": "classify_brazil",
                     "params": [0.5],
                     "inputs": ["features"],
-                    "output": true
+                    "output": True
                 }
             ]
     }
