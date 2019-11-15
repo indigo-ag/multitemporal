@@ -17,7 +17,7 @@ def run_tile(tile_id: str, tmp_dir: str):
     make_features_json(tile_id=tile_id, tmp_dir=tmp_dir)
     # call the cli command to do the work
     # this is pretty hacky way to get it to work
-    sys.argv = ['', '--nproc', '1', '--ymd', '--nongips', '--conf', f'{tmp_dir}/features.json']
+    sys.argv = ['', '--nproc', '6', '--ymd', '--nongips', '--conf', f'{tmp_dir}/features.json']
     mt()
 
 
@@ -28,7 +28,7 @@ def download_files(year: int, tile_id: str, tmp_dir: str):
     mask_s3_path = S3Path(bucket='tl-octopus', key=f'raw/raster/br_crop_mask')
 
     input_path = Path(tmp_dir) / 'data'
-    output_path = Path(tmp_dir) / 'results'
+    output_path = Path(tmp_dir) / 'result'
     # create the inputs if they dont exist
     input_path.mkdir(exist_ok=True)
     output_path.mkdir(exist_ok=True)
@@ -70,8 +70,8 @@ def download_files(year: int, tile_id: str, tmp_dir: str):
 
 
 def upload_outputs(year: int, tile_id: str, tmp_dir: str):
-    output_dir = Path(tmp_dir) / 'results'
-    output_file = output_dir.joinpath(f'mt_brazil_classify_brazil.tif')
+    output_dir = Path(tmp_dir) / 'result'
+    output_file = output_dir.joinpath(f'mt_brazil_mt_brazil_features.tif')
     s3_path = S3Path(bucket='tl-octopus', key=f'raw/raster/br_crop_type/{year}/{tile_id}.tif')
     s3_path.upload_path(output_file)
 
