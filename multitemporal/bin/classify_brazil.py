@@ -25,7 +25,7 @@ def classify_brazil(data, missingval, params):
 
     output = np.zeros((nout, nyrout, npx), dtype=np.float32)
 
-    model_file = "/data/brazil_crop_mask/rf_2004-2016_varsel_0-7samp_255trees_20md_mfsqrt.sav"
+    model_file = params[0]
     model = pickle.load(open(model_file, 'rb'))
 
     for k in range(npx):

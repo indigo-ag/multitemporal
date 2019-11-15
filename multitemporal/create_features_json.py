@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 
-def make_features_json(tile_id: str, tmp_dir: str) -> None:
+def make_features_json(tmp_dir: str) -> None:
     """"
     Tile id is the current tile we are processing
     input_dir is the temporary dir to save the files to
@@ -63,7 +63,7 @@ def make_features_json(tile_id: str, tmp_dir: str) -> None:
                 {
                     "name": "classes",
                     "module": "classify_brazil",
-                    "params": [0.5],
+                    "params": [f"{tmp_dir}/rf_2004-2016_varsel_0-7samp_255trees_20md_mfsqrt.sav"],
                     "inputs": ["features"],
                     "output": True
                 }

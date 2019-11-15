@@ -13,8 +13,8 @@ from multitemporal.mt import main as mt
 import sys
 
 
-def run_tile(tile_id: str, tmp_dir: str):
-    make_features_json(tile_id=tile_id, tmp_dir=tmp_dir)
+def run_tile(tmp_dir: str):
+    make_features_json(tmp_dir=tmp_dir)
     # call the cli command to do the work
     # this is pretty hacky way to get it to work
     sys.argv = ['', '--nproc', '6', '--ymd', '--nongips', '--conf', f'{tmp_dir}/features.json']
@@ -82,7 +82,7 @@ def upload_outputs(year: int, tile_id: str, tmp_dir: str):
 def run_mt(tile_id: str, year: int):
     with tempfile.TemporaryDirectory() as tmp_dir:
         download_files(year=year, tile_id=tile_id, tmp_dir=tmp_dir)
-        run_tile(tile_id=tile_id, tmp_dir=tmp_dir)
+        run_tile(tmp_dir=tmp_dir)
         upload_outputs(year=year, tile_id=tile_id, tmp_dir=tmp_dir)
 
 
