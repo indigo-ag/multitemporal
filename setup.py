@@ -43,6 +43,7 @@ setup(
     entry_points={
         'console_scripts': [
             'multitemporal=multitemporal.mt:main'
+            'run_mt=multitemporal.run_mt_script:run_mt'
         ]
     },
     zip_safe=False,

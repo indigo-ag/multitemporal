@@ -1,3 +1,4 @@
+import glob
 import json
 import subprocess
 import tempfile
@@ -6,7 +7,7 @@ import pandas as pd
 
 import click
 
-from telluslabs import S3Path
+from telluslabs.s3 import S3Path
 
 from multitemporal.create_features_json import make_features_json
 
@@ -16,6 +17,7 @@ def run_tile(tile_id: str, tmp_dir: str):
     # call the cli command to do the work
     command = f'multitemporal --nproc 1 --nongips --ymd --conf {tmp_dir}/features.json'
     subprocess.run(command)
+
 
 def download_files(year: int, tile_id: str, tmp_dir: str):
     inventory_s3 = S3Path(bucket='tl-octopus', key=f'raw/inventory/MCD43A4_{year - 1}0901_{year}0901_evi2.json')
@@ -55,14 +57,20 @@ def download_files(year: int, tile_id: str, tmp_dir: str):
         local_path = input_path / f'br_cropmask_{y}0101_{tile_id}.tif'
         input_mask_path.download_to(local_path)
 
-    # TODO download the randomForest model object to use as training
+    model_file_path = \
+        S3Path.from_str('s3://rob-scratch/brazil_crop_mask/rf_2004-2016_varsel_0-7samp_255trees_20md_mfsqrt.sav')
+    model_file_path.download_to(Path(tmp_dir))
 
     print('downloading finished. files downloaded are here: ')
-    for f in glob.glob(f'{INPUT_PATH}/*'):
+    for f in glob.glob(f'{input_path}/*'):
         print(f'{f}\n')
 
+
 def upload_outputs(year: int, tile_id: str, tmp_dir: str):
-    pass
+    output_dir = Path(tmp_dir) / 'results'
+    output_file = output_dir.joinpath(f'mt_brazil_classify_brazil.tif')
+    s3_path = S3Path(bucket='tl-octopus', key=f'raw/raster/br_crop_type/{year}/{tile_id}.tif')
+    s3_path.upload_path(output_file)
 
 
 @click.command('run_mt')
@@ -73,3 +81,7 @@ def run_mt(tile_id: str, year: int):
         download_files(year=year, tile_id=tile_id, tmp_dir=tmp_dir)
         run_tile(tile_id=tile_id, tmp_dir=tmp_dir)
         upload_outputs(year=year, tile_id=tile_id, tmp_dir=tmp_dir)
+
+
+if __name__ == '__main__':
+    run_mt()
