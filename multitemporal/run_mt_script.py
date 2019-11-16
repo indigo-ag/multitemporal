@@ -9,16 +9,35 @@ import click
 from telluslabs.s3 import S3Path
 
 from multitemporal.create_features_json import make_features_json
-from multitemporal.mt import main as mt
-import sys
+from multitemporal.mt import run
 
 
 def run_tile(tmp_dir: str):
     make_features_json(tmp_dir=tmp_dir)
-    # call the cli command to do the work
-    # this is pretty hacky way to get it to work
-    sys.argv = ['', '--nproc', '6', '--ymd', '--nongips', '--conf', f'{tmp_dir}/features.json']
-    mt()
+    # call the run function to run the code
+
+    with open(f'{tmp_dir}/features.json') as cf:
+        conf = json.load(cf)
+
+    conf.update({'nproc': 6,
+                 'ymd': True,
+                 'nongips': True})
+
+    # apply defaults
+    # done after above so that defaults from one do not overwrite the other
+    # ok for now -- some things just don't have defaults
+    defaults = {
+        'nproc': 1,
+        'nongips': False,
+        'ymd': False,
+        'blkrow': 10,
+        'compthresh': 0.0,
+        'dperframe': 1,
+        'missing_out': -32768.,
+    }
+    for d in defaults:
+        conf[d] = conf.get(d, defaults[d])
+    run(**conf)
 
 
 def download_files(year: int, tile_id: str, tmp_dir: str):
