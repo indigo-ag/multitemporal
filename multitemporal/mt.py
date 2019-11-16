@@ -301,7 +301,8 @@ def run(projdir, outdir, projname, sources, steps,
         except ImportError:
             mod = importlib.import_module('multitemporal.bin.' + step['module'])
             step['function'] = eval("mod." + step['module'])
-        step['params'] = np.array(step['params']).astype('float32')
+        # do we need to convert the params to float? the json retains data type
+        # step['params'] = np.array(step['params']).astype('float32')
         step['initial'] = False
 
         # determine the number of inputs to this step
