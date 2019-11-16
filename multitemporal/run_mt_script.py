@@ -43,7 +43,7 @@ def run_tile(tmp_dir: str):
 def download_files(year: int, tile_id: str, tmp_dir: str):
     inventory_s3 = S3Path(bucket='tl-octopus', key=f'raw/inventory/MCD43A4_{year - 1}0901_{year}0901_evi2.json')
     tile_id_split = tile_id.split('_')
-    new_tile_id = f'h{int(tile_id_split[0]):2d}_v{int(tile_id_split[1]):2d}'
+    new_tile_id = f'h{int(tile_id_split[0]):02d}_v{int(tile_id_split[1]):02d}'
     mask_s3_path = S3Path(bucket='tl-octopus', key=f'raw/raster/br_crop_mask')
 
     input_path = Path(tmp_dir) / 'data'
