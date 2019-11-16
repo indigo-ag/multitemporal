@@ -71,7 +71,7 @@ def download_files(year: int, tile_id: str, tmp_dir: str):
 
 def upload_outputs(year: int, tile_id: str, tmp_dir: str):
     output_dir = Path(tmp_dir) / 'result'
-    output_file = output_dir.joinpath(f'mt_brazil_classify_brazil.tif')
+    output_file = output_dir.joinpath(f'mt_brazil_classes.tif')
     s3_path = S3Path(bucket='tl-octopus', key=f'raw/raster/br_crop_type/{year}/{tile_id}.tif')
     s3_path.upload_path(output_file)
 
