@@ -25,7 +25,8 @@ def classify_brazil(data, missingval, params):
 
     output = np.zeros((nout, nyrout, npx), dtype=np.float32)
 
-    model_file = params[0]
+    # this is absolutely the worst but couldnt get it otherwise
+    model_file = '/data/br_rf_model.sav'
     model = pickle.load(open(model_file, 'rb'))
 
     for k in range(npx):

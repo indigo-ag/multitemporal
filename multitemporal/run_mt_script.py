@@ -62,7 +62,7 @@ def download_files(year: int, tile_id: str, tmp_dir: str):
 
     model_file_path = S3Path.from_str('s3://tl-octopus/user/damien/brazil_crop_mask/'
                                       'rf_2004-2016_varsel_0-7samp_255trees_20md_mfsqrt.sav')
-    model_file_path.download_to(Path(tmp_dir))
+    model_file_path.download_to(Path('/data/br_rf_model.sav'))
 
     print('downloading finished. files downloaded are here: ')
     for f in glob.glob(f'{input_path}/*'):

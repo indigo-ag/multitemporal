@@ -63,7 +63,7 @@ def make_features_json(tmp_dir: str) -> None:
                 {
                     "name": "classes",
                     "module": "classify_brazil",
-                    "params": [f"{tmp_dir}/rf_2004-2016_varsel_0-7samp_255trees_20md_mfsqrt.sav"],
+                    "params": [0.5],
                     "inputs": ["features"],
                     "output": True
                 }
