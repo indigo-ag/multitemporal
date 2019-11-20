@@ -8,6 +8,7 @@ from osgeo import gdal
 
 from multitemporal import mt
 
+
 def data_dir():
     return os.path.join(os.path.dirname(__file__), 'data')
 
@@ -35,6 +36,32 @@ def test_passthrough(nproc, tmpdir):
     expected = gdal.Open(expected_fp).ReadAsArray()
     # both pytest & numpy have approximate-equality abilities if needed
     assert (expected == actual).all()
+
+
+test_passthrough2_args = {
+    'compthresh': 0.01, # so smaller dataset will work
+    "dperframe": 1,
+    "sources"  : [{"name": "ndvi", "regexp": "^(?P<datestr>\\d{7})_L.._ndvi-(?P<tileid>\w{3}).tif$", "bandnum": 1}],
+    "steps"    : [{"module": "passthrough", "params": [], "inputs": ["ndvi"], "output": True}]}
+
+
+@pytest.mark.parametrize("nproc", [1, 2])
+def test_passthrough2(nproc, tmpdir):
+    """Use the passthrough module as a way to test mt throughput, this time with weird regex"""
+    # refactor out for additional tests and follow pattern in files:
+    input_dir = os.path.join(data_dir(), 'input')
+    output_bn = 'tpt_proj_passthrough.tif'
+    expected_fp = os.path.join(data_dir(), 'expected', output_bn)
+    actual_fp = str(tmpdir.join(output_bn))
+
+    mt.run(projname='tpt_proj', projdir=input_dir, outdir=str(tmpdir), nproc=nproc, tileid='toa',
+           **test_passthrough2_args)
+
+    actual = gdal.Open(actual_fp).ReadAsArray()
+    expected = gdal.Open(expected_fp).ReadAsArray()
+    # both pytest & numpy have approximate-equality abilities if needed
+    assert (expected == actual).all()
+
 
 def test_two_sources(tmpdir):
     """As test_passthrough, but with two sources.
